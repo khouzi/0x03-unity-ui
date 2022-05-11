@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,24 +11,56 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public float speed;
     public int health = 5;
+    public Text scoreText, healthText, winloseText;
+    public Image winloseBG;
+
+    void win()
+    {
+        winloseBG.gameObject.SetActive(true);
+        winloseBG.color = Color.green;
+        winloseText.text = "You Win!";
+        winloseText.color = Color.black;
+        StartCoroutine(LoadScene(3));
+    }
+
+    void lose()
+    {
+        winloseBG.gameObject.SetActive(true);
+        winloseBG.color = Color.red;
+        winloseText.text = "Game Over!";
+        winloseText.color = Color.white;
+        StartCoroutine(LoadScene(3));
+    }
+
+    void SetHealthText()
+    {
+        healthText.text = health.ToString("Health: " + health);
+    }
+
+    void SetScoreText()
+    {
+        scoreText.text = score.ToString("Score: " + score);
+    }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Pickup")
         {
             score++;
-            Debug.Log("Score: "+ score);
+            SetScoreText();
             Destroy(other.gameObject);
         }
 
         if (other.tag == "Trap")
         {
             health--;
-            Debug.Log("Health: "+ health);
+            SetHealthText();
         }
 
         if (other.tag == "Goal")
-            Debug.Log("You win!");
+        {
+            win();
+        }
     }
 
     // Update is called once per frame
@@ -54,8 +88,16 @@ public class PlayerController : MonoBehaviour
     {
         if (health == 0)
         {
-            Debug.Log("Game Over!");
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
+            lose();
         }
+
+        if (Input.GetKey(KeyCode.Escape))
+            SceneManager.LoadScene("Menu");
+    }
+
+    IEnumerator LoadScene(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene("Maze");
     }
 }

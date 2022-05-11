@@ -915,7 +915,7 @@ GameObject:
   m_Component:
   - component: {fileID: 761747101}
   m_Layer: 5
-  m_Name: OptionMenu
+  m_Name: OptionsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1701,7 +1701,7 @@ GameObject:
   - component: {fileID: 1966960405}
   - component: {fileID: 1966960404}
   m_Layer: 5
-  m_Name: OptionTitle
+  m_Name: OptionsTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
